@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+    --font-Neucha: "Neucha", sans-serif;
+    --color-teal: #008080;
+    --color-brighter-teal: #029e9e;
+}

@@ -14,7 +14,7 @@ const InputField: React.FC<Props> = ({ task, setTask, handleAdd }) => {
     <form
       className="flex flex-row items-center relative w-[90%]"
       onSubmit={(e) => {
-        (handleAdd(e), inputRef.current?.blur);
+        (handleAdd(e), inputRef.current?.blur());
       }}
     >
       <input

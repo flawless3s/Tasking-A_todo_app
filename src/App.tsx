@@ -15,7 +15,6 @@ const App: React.FC = () => {
       setTasks([...tasks, { id: Date.now(), isDone: false, text: task }]);
       setTask("");
     }
-    console.log(tasks);
   };
   return (
     <div className="bg-teal w-screen h-screen flex flex-col items-center">

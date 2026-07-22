@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import InputField from "./components/InputField";
 import type { Task } from "./models";
 import TaskList from "./components/TaskList";
-import { DragDropContext } from "@hello-pangea/dnd";
+import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
 
 const App: React.FC = () => {
   const [task, setTask] = useState<string>("");
@@ -18,16 +18,51 @@ const App: React.FC = () => {
       setTask("");
     }
   };
-  return (
-    <DragDropContext onDragEnd={()=>{}}>
-    <div className="bg-teal w-screen h-screen flex flex-col items-center">
-      <span className="font-Neucha text-4xl text-white my-7.5 mx-0 uppercase z-1 text-center">
-        Tasking
-      </span>
-      <InputField task={task} setTask={setTask} handleAdd={handleAdd} />
 
-      <TaskList tasks={tasks} setTasks={setTasks} completedTasks={completedTasks} setCompletedTasks={setCompletedTasks} />
-    </div>
+  const onDragEnd = (result: DropResult) => {
+    const {source, destination} = result;
+
+    if (!destination) return;
+
+    if ((destination.droppableId === source.droppableId) && (destination.index === source.index)) return;
+
+
+    let add: Task, active = [...tasks], completed = [...completedTasks];
+
+    if(source?.droppableId === "Active_tasks"){
+        add = active[source.index]
+        active.splice(source.index, 1)
+    }else{
+      add = completed[source.index]
+      completed.splice(source.index, 1)
+    }
+
+    if(destination.droppableId === "Active_tasks"){
+      add = {...add, isDone: !add.isDone}
+      active.splice(destination.index, 0, add)
+    }else{
+      add = {...add, isDone: !add.isDone}
+      completed.splice(destination.index, 0, add)
+    }
+
+    setTasks(active);
+    setCompletedTasks(completed);
+  };
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="bg-teal w-screen h-screen flex flex-col items-center">
+        <span className="font-Neucha text-4xl text-white my-7.5 mx-0 uppercase z-1 text-center">
+          Tasking
+        </span>
+        <InputField task={task} setTask={setTask} handleAdd={handleAdd} />
+
+        <TaskList
+          tasks={tasks}
+          setTasks={setTasks}
+          completedTasks={completedTasks}
+          setCompletedTasks={setCompletedTasks}
+        />
+      </div>
     </DragDropContext>
   );
 };

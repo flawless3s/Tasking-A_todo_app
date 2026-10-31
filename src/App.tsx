@@ -1,5 +1,5 @@
 //src/App.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "./components/InputField";
 import type { Task } from "./models";
 import TaskList from "./components/TaskList";
@@ -9,6 +9,8 @@ const App: React.FC = () => {
   const [task, setTask] = useState<string>("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
+  const [count, setCount] = useState<number>(0);
+  const [completedCount, setCompletedCount] = useState<number>(0);
 
   const handleAdd = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -19,30 +21,40 @@ const App: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    setCount(tasks.length);
+    setCompletedCount(completedTasks.length);
+  }, [task, completedTasks]);
+
   const onDragEnd = (result: DropResult) => {
-    const {source, destination} = result;
+    const { source, destination } = result;
 
     if (!destination) return;
 
-    if ((destination.droppableId === source.droppableId) && (destination.index === source.index)) return;
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
 
+    let add: Task,
+      active = [...tasks],
+      completed = [...completedTasks];
 
-    let add: Task, active = [...tasks], completed = [...completedTasks];
-
-    if(source?.droppableId === "Active_tasks"){
-        add = active[source.index]
-        active.splice(source.index, 1)
-    }else{
-      add = completed[source.index]
-      completed.splice(source.index, 1)
+    if (source?.droppableId === "Active_tasks") {
+      add = active[source.index];
+      active.splice(source.index, 1);
+    } else {
+      add = completed[source.index];
+      completed.splice(source.index, 1);
     }
 
-    if(destination.droppableId === "Active_tasks"){
-      add = {...add, isDone: !add.isDone}
-      active.splice(destination.index, 0, add)
-    }else{
-      add = {...add, isDone: !add.isDone}
-      completed.splice(destination.index, 0, add)
+    if (destination.droppableId === "Active_tasks") {
+      add = { ...add, isDone: !add.isDone };
+      active.splice(destination.index, 0, add);
+    } else {
+      add = { ...add, isDone: !add.isDone };
+      completed.splice(destination.index, 0, add);
     }
 
     setTasks(active);
@@ -55,6 +67,10 @@ const App: React.FC = () => {
           Tasking
         </span>
         <InputField task={task} setTask={setTask} handleAdd={handleAdd} />
+        <div className="w-screen flex px-7 gap-12 mt-1">
+          <span className="w-[50%] px-3.75 font-Neucha text-lg text-white">Count: {count}</span>
+          <span className="w-[50%] px-3.75 font-Neucha text-lg text-white">Count: {completedCount}</span>
+        </div>
 
         <TaskList
           tasks={tasks}

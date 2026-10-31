@@ -17,7 +17,7 @@ const TaskList: React.FC<TaskListProps> = ({
   setTasks,
 }) => {
   return (
-    <div className="flex justify-between mt-2.5 items-start w-[95%]">
+    <div className="flex justify-between mt-1.5 items-start w-[95%]">
       <Droppable droppableId="Active_tasks">
         {(provided, snapshot) => {
           return (

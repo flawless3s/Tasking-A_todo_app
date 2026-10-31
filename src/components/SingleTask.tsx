@@ -6,7 +6,7 @@ import { Draggable } from "@hello-pangea/dnd";
 
 type SingleTaskProps = {
   task: Task;
-  key: number;
+  id: string;
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   index: number;
@@ -14,7 +14,7 @@ type SingleTaskProps = {
 
 const SingleTask: React.FC<SingleTaskProps> = ({
   task,
-  key,
+  id,
   tasks,
   setTasks,
   index,
@@ -23,7 +23,7 @@ const SingleTask: React.FC<SingleTaskProps> = ({
   const [editText, setEditText] = useState<string>(task.text);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleDone = (id: number) => {
+  const handleDone = (id: string) => {
     setTasks(
       tasks.map((task) =>
         task.id === id ? { ...task, isDone: !task.isDone } : task,
@@ -31,11 +31,11 @@ const SingleTask: React.FC<SingleTaskProps> = ({
     );
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
-  const handleEdit = (e: React.FormEvent, id: number) => {
+  const handleEdit = (e: React.FormEvent, id: string) => {
     e.preventDefault();
     setTasks(
       tasks.map((task) =>
@@ -53,7 +53,7 @@ const SingleTask: React.FC<SingleTaskProps> = ({
     <Draggable draggableId={task.id.toString()} index={index}>
       {(provided) => (
         <form
-          key={key}
+          key={id}
           className="flex rounded-[5px] p-5 mt-3.75 bg-yellowish transition duration-200 hover:shadow-[0_0_5px_black] hover:scale-[1.03]"
           ref={provided.innerRef}
           onSubmit={(e) => handleEdit(e, task.id)}

@@ -6,6 +6,7 @@ import TaskList from "./components/TaskList";
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
 import { useLocalStorage } from "./utils/localStorage";
 
+
 const App: React.FC = () => {
   const [task, setTask] = useState<string>("");
   const [tasks, setTasks] = useLocalStorage('tasks',[]);
@@ -17,7 +18,7 @@ const App: React.FC = () => {
     e.preventDefault();
 
     if (task) {
-      setTasks([...tasks, { id: Date.now(), isDone: false, text: task }]);
+      setTasks([...tasks, { id: crypto.randomUUID(), isDone: false, text: task }]);
       setTask("");
     }
   };

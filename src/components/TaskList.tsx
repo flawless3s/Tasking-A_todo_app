@@ -34,7 +34,7 @@ const TaskList: React.FC<TaskListProps> = ({
                 <SingleTask
                   index={index}
                   task={task}
-                  key={task.id}
+                  id={task.id}
                   tasks={tasks}
                   setTasks={setTasks}
                 />
@@ -61,7 +61,7 @@ const TaskList: React.FC<TaskListProps> = ({
                 <SingleTask
                   index={index}
                   task={task}
-                  key={task.id}
+                  id={task.id}
                   tasks={completedTasks}
                   setTasks={setCompletedTasks}
                 />

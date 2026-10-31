@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import type { Task } from "../models";
+import type { Task } from "../models/models";
 import { FaEdit, FaCheck } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Draggable } from "@hello-pangea/dnd";

@@ -1,7 +1,7 @@
 //src/App.tsx
 import React, { useEffect, useState } from "react";
 import InputField from "./components/InputField";
-import type { Task } from "./models";
+import type { Task } from "./models/models";
 import TaskList from "./components/TaskList";
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
 
@@ -68,8 +68,12 @@ const App: React.FC = () => {
         </span>
         <InputField task={task} setTask={setTask} handleAdd={handleAdd} />
         <div className="w-screen flex px-7 gap-12 mt-1">
-          <span className="w-[50%] px-3.75 font-Neucha text-lg text-white">Count: {count}</span>
-          <span className="w-[50%] px-3.75 font-Neucha text-lg text-white">Count: {completedCount}</span>
+          <span className="w-[50%] px-3.75 font-Neucha text-lg text-white">
+            Count: {count}
+          </span>
+          <span className="w-[50%] px-3.75 font-Neucha text-lg text-white">
+            Count: {completedCount}
+          </span>
         </div>
 
         <TaskList

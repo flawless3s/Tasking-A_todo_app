@@ -1,5 +1,5 @@
 import React from "react";
-import type { Task } from "../models";
+import type { Task } from "../models/models";
 import SingleTask from "./SingleTask";
 import { Droppable } from "@hello-pangea/dnd";
 

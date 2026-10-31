@@ -4,11 +4,12 @@ import InputField from "./components/InputField";
 import type { Task } from "./models/models";
 import TaskList from "./components/TaskList";
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
+import { useLocalStorage } from "./utils/localStorage";
 
 const App: React.FC = () => {
   const [task, setTask] = useState<string>("");
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useLocalStorage('tasks',[]);
+  const [completedTasks, setCompletedTasks] = useLocalStorage('completed-tasks',[]);
   const [count, setCount] = useState<number>(0);
   const [completedCount, setCompletedCount] = useState<number>(0);
 
